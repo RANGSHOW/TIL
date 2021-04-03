@@ -87,16 +87,22 @@
 
  
 
+ 	text-align: center; 가운데 정렬 
 
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
+ - <div style: box> 는 안먹힘
+       
+   </div>
+
+   
+
+ -  	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
