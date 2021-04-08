@@ -623,11 +623,11 @@ public static MemberDAO getInstance() {
 
 ```xml
 <Resource
-	name="jdbc/orcle"							// DataSource에 대한 JNDI 이름
+	name="jdbc/oracle"							// DataSource에 대한 JNDI 이름
 	auth="Container"							// 인증 주체
 	type="javax.sql.DataSource"					// 데이터베이스 종류: DataSource
-	DriverClassName="oracle.jdbc.OracleDriver"
-	url="jdbc:orcle:thin:@localhost:1521:xe"
+	driverClassName="oracle.jdbc.OracleDriver"
+	url="jdbc:oracle:thin:@localhost:1521:xe"
 	username="newuser"
 	password="1234"
 	maxActive="50"				// 동시에 최대로 데이터베이스에 연결할 수 있는 Connection 수
@@ -683,4 +683,10 @@ Q. 연습문제
 
       
 
-	
+	private String bookNo;
+	private String bookName;
+	private String bookAuthor;
+	private int bookPrice;
+	private String bookDate;
+	private int bookStock;
+	private String pubNo;
