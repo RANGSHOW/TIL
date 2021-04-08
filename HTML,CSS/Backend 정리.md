@@ -620,4 +620,67 @@ public static MemberDAO getInstance() {
 - 웹 애플리케이션 실행 시 톰캣이 만들어놓은 ConnectionPool 객체에 접근할 때 JNDI를 이용
 
 - `dataSource = (DataSource)context.lookup("java:comp/env/jdbc/oracle");`
-- 
+
+```xml
+<Resource
+	name="jdbc/orcle"							// DataSource에 대한 JNDI 이름
+	auth="Container"							// 인증 주체
+	type="javax.sql.DataSource"					// 데이터베이스 종류: DataSource
+	DriverClassName="oracle.jdbc.OracleDriver"
+	url="jdbc:orcle:thin:@localhost:1521:xe"
+	username="newuser"
+	password="1234"
+	maxActive="50"				// 동시에 최대로 데이터베이스에 연결할 수 있는 Connection 수
+	maxWait="1000" // 새로운 연결이 생길 때까지 기다릴 수 있는 최대시간(1000 = 1초) 음수면 무한대기
+/>
+```
+---
+
+Q. 연습문제: 커넥션 풀 이용해서 데이터 베이스 insert 기능 수행
+
+ 1. 패키지 새로 생성
+
+ 2. MemberVO 복사해서 사용
+
+ 3. MemberDAO insertMember() 추가
+
+ 4. 서블릿: MemberServlet3
+
+    맵핑네임: /member3
+
+	5. 입력 폼 생성 (html): MemberVO에 맞춰서 입력 태그 작성
+
+
+
+---
+
+Q. 연습문제
+
+1. 기존의 BOOK 테이블 사용
+
+2. 커넥션 풀 (`<Resource>`에 등록된 user 접속으로 Book 테이블 복사해 놓았음)
+
+3. 도서 정보 등록 / 도서 정보 조회 / 도서 정보 삭제
+
+   1. BookVO
+
+   2. BookDAO 
+
+      1. selectBook()
+      2. insertBook()
+      3. deleteBook()
+
+   3. BookSelectServlet
+
+      1. 맵핑 네임:  /bookSelect
+
+   4. BookInsertServlet
+
+      1. 맵핑 네입: /bookInsert
+      2. dao.insertBook() / dao.deleteBook()
+
+      
+
+      
+
+	
