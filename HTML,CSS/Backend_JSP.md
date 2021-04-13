@@ -409,8 +409,8 @@ include1.class	↔	include2.class
 - 요청 파라미터: `param` / `paramValues`
 - 쿠키 값 참조: `Cookies`
 - JSP 내용
-  - pageContext: 페이지 정보는 나타내는 컨텍스트 페이지 참조
-- 초기 파라미터: iniParam (web.xml에 context 초기화 파라미터 참조)
+  - `pageContext`: 페이지 정보는 나타내는 컨텍스트 페이지 참조
+- 초기 파라미터: `iniParam` (web.xml에 context 초기화 파라미터 참조)
 
 
 
@@ -427,5 +427,298 @@ include1.class	↔	include2.class
 - http://localhost:8080/JSP01/패키지파일
   1. `<a href="http://localhost:8080/JSP01/login">` 로그인 `</a>`
   2. `<a href="JSP01/login">` 로그인 `</a>`
-  3. `<a href="<%=request.getContextPath()%>">` 로그인 `</a>`
+  3. `<a href="<%=request.getContextPath()%>EL">` 로그인 `</a>`
   4. `<a href=${pageContext.request.contextPath}/sec01/login.jsp">` 로그인 `</a>`
+
+
+
+### EL을 이용해서 바인딩 속성 출력
+
+- request, session, application 내장 객체에 속성을 바인딩한 후
+
+  다른 서블릿이나 JSP 전달 가능
+
+- 자바 코드를 사용하지 않고 바인딩된 속성 이름으로 값 출력 가능
+
+
+
+### 스코프 (scope) 우선 순위
+
+- `pageScope`: 현재 페이지 영역의 변수
+- `requestScope`  : 이전 페이지에서 전달된 영역의 변수
+- `sessionScope` : 세션 영역의 변수
+- `applicationScope`: 애플리케이션 영역의 변수
+
+
+
+- 각 내장 객체에서 바인딩하는 속성 이름이 같은 경우
+- 각 내장 객체에 지정된 출력 우선 순위에 따라 순서대로 속성에 접근 
+- 높음    `page` > `request` > `session` > `application`     낮음
+
+
+
+---
+
+## JSTL ***(JSP Standard Tag Library)***
+
+> JSP 표준 태그 라이브러리
+
+- JSP와 HTML을 같이 사용함으로써 가독성이 떨어지는 것을 보완하고자 만들어진 태그 라이브러리
+
+- JSP 페이지에서 자바 코드를 사용하지 않고 태그 사용
+
+- JSP 페이지의 로직을 담당하는 부분인 제어문 및 데이터베이스 처리 등을 표준 라이브러리 태그로 제공
+
+- 사용하기 위해서는 라이브러리 별도로 설치 (다운로드해서 저장)
+
+  `<%@ taglib uri="" prefix="">`
+
+
+
+---
+
+
+
+### JSTL 라이브러리: 5개의 라이브러리로 구성
+
+- core: c : 변수, 제어문, url 등 처리
+- format: fmt: 숫자 / 날짜 / 시간 지정, 국제어, 다국어 처리
+- database: sql: 데이터베이스 작업 처리
+- xml: x: XML 문서 처리
+- function: fn: 함수 기능 처리
+
+
+
+#### ***Core***(코어)
+
+> URI: `http://java.sun.com/jsp/jstl/core`
+
+- Prefix: c
+- 제공 기능
+  - 변수의 선언 및 삭제 등 변수와 관련된 작업
+  - if, for 문 등 제어문 처리
+  - url 처리 및 기타 예외 처리, 화면 출력  기능
+
+#### Core 태그 리스트
+
+- 변수 지원
+  - `<c:set>`: 변수 설정
+  - `<c:remove>`: 설정된 변수 제거
+- 흐름 제어
+  - `<c:if>`: 조건문
+  - `<c:choose>`: 선택 (자바의 switch문)
+    - 서브 태그: `<when>` / `<otherwise>`
+  - `<c:forEach>`: 반복문
+  - `<c:forTokens>`: 구분자로 분리된 각 토근 처리할 때 사용
+- URL 처리: ${pageContext.request.contextPath}를 기본으로 경로 설정
+  - `<c:import>`: URL을 이용해서 다른 자원 추가
+  - `<c:redirect>`: `request.sendRedirect()` 기능 수행
+  - `<c:url>`: 요청 매개변수로부터 URL 생성
+- 기타 태그
+  - `<c:out>`: JspWriter에 내용을 처리한 후 출력
+  - `<c:catch>`: 예외 처리
+
+
+
+#### `<c:if>` 조건문
+
+``` jsp
+<c:if test="%{조건식}" var="변수명" {scope} />
+```
+
+
+
+#### `<c:choose>` 스위치문
+
+``` jsp
+<c:choose>
+	<c:when test="조건식1">본문내용1</c:when>
+    <c:when test="조건식2">본문내용2</c:when>
+    <c:otherwise>본문내용3</c:otherwise>
+</c:choose>
+```
+
+#### 
+
+#### `<c:forEach>` 반복문
+
+``` jsp
+<c:forEach var="변수명" items="반복할 객체면" begin="시작값" end="마지막값" step="증가값">
+</c:forEach>
+```
+
+
+
+---
+
+### 포메팅 태그 라이브러리
+
+- 숫자 및 날짜 관련된 포메팅 태그 라이브러리 
+- fmt
+  - `<fmt:formatNumber>`
+  - `<fmt:formatDate>`
+
+
+
+### 문자열 처리 함수
+
+- JSTL에서 제공하는 함수를 이요해서 JSP에서 사용 가능
+- fn:toLower(), ...
+
+
+
+---
+
+
+
+#### Q1. <총정리 예제> 회원 정보 출력
+
+- member_menu.jsp (회원 정보 조회): "${contextPath}/memberList"
+- memberController (서블릿): doHandle()로 처리
+  - DAO의 listMembers() 호출해서 ArrayList로 받음
+  - request.SetAttribute() 사용해서 바인딩
+  - 포워딩 (memberList.jsp로)
+- MemberVO / MemberDAO
+- memberList.jsp (뷰)
+  - EL / JSTL 사용해서 출력
+
+
+
+---
+
+
+
+#### Q2. <총정리 예제> 도서 정보 출력
+
+- book_menu.jsp (도서 정보 조회): "${contextPath}/bookList"
+- bookController (서블릿): doHandle()로 처리
+  - DAO의 selectBook() 호출해서 ArrayList로 받음
+  - request.SetAttribute() 사용해서 바인딩
+  - 포워딩 (bookList.jsp로)
+- BookVO / BookDAO
+- bookList.jsp (뷰)
+  - EL / JSTL 사용해서 출력
+
+
+
+---
+
+### MVC 패턴
+
+
+
+#### 웹 애플리케이션 개발
+
+- 화면: 프론트엔드 디자이너 담당
+- 비즈니스 로직: 백엔드 프로그래머 담당
+
+- 처음부터 새로 개발하는 것이 아니라 기존의 웹 애플리케이션 개발 방법에 따라서 개발
+- 많이 사용하는 **표준화 소스 구조**를 만들어서 개발 진행
+
+
+
+#### 웹 애플리케이션 모델
+
+- 표준화 소스 구조
+- 모델1 방식
+- 모델2 방식
+
+
+
+#### 1. 모델 1 방식
+
+- 모든 클라이언트 요청과 비즈니스 로직은 JSP가 담당
+
+- 클라이언트 요청 → JSP (화면 / 로직 처리) → DAO → 데이터베이스
+
+- 기능 구현이 쉽고 편리
+
+- 웹 사이트 화면 기능이 복잡해지고 화면 기능과 비즈니스 로직 기능이 섞이면서 
+
+  유지보수에 문제 발생
+
+- 코드 재사용성도 떨어짐
+
+
+
+#### 2. 모델 2 방식 (MVC 패턴)
+
+- 모델 1 방식의 단점 보완
+- 웹 애플리케이션의 각 기능을 분리해서 구현
+  - 클라이언트 요청 처리 담당
+- 각 기능이 분리되어 모듈화되어 있으므로 모듈별 개발이 가능
+- 모듈을 비슷한 프로그램 개발에 사용할 수 있어서 재사용성이 높아짐
+- 응용프로그램 확장성 및 이식성이 좋아짐
+- 개발 후 서비스 제공 시 유지보수 편리
+- 현재 모든 웹 프로그램은 모델 2 방식으로 개발
+
+
+
+#### MVC 패턴
+
+- **M**: Model (DTO / DAO)
+- **V**: View (JSP 페이지)
+- **C**: Controller (서블릿)
+
+
+
+####  V: View 
+
+- 애플리케이션에서 "window" 역할 
+  - 사용자와의 인터페이스 담당: 클라이언트로부터 요청 받는 페이지 / 결과를 응답하는 페이지
+- HTML 문서 내용 포함 (HTML 문서 만듦)
+- Model로부터 데이터 가져오고
+- Model로부터 변경된 자료를 가져올 수 있다
+
+
+
+#### C: Controller
+
+- Model에 있는 데이터 갱신
+- HTTP request로부터 들어온 데이터 검수
+
+
+
+### 서블릿 실행 구조
+
+1. #### url-pattern
+
+- 디렉토리 패턴
+  - 디렉토리 형태로 서버의 해당 서블릿을 찾아서 실행하는 구조
+  - http://localhost:8080/JSP01/selectMember
+
+- 확장자 패턴
+
+  - 확장자 형태로 서버의 해당 서블릿을 찾아서 실행 구조
+
+    - http://localhost:8080/JSP01/selectMember.do
+    - http://localhost:8080/JSP01/insertMember.do
+
+    - \*.do 서블릿 (*.do로 맵핑되어 있는 서블릿으로 이동)
+
+2. #### Front Controller 패턴
+
+- 모든 클라이언트 요청을 한 곳에서 처리하도록 하나의 대표 컨트롤러 사용
+- 별도의 클래스를 추가하지 않고 Front Controller가 다 처리
+- Front Controller 내용이 길고 복잡해짐
+- 클라이언트 요청을 한 곳으로 집중시켜서 효율적으로 개발 및 유지보수 가능
+
+
+
+selectMember.do 	 → 
+
+insertMember.do 	 →		**Front Controller**  (하나의 서블릿이 모든 *do 처리)  → DAO → DB
+
+deleteMember.do 	→
+
+
+
+3. #### Command 패턴
+
+- Front Controller (서블릿)가 모든 클라이언트 요청을 직접 처리하지 않고
+
+  담당 클래스가 처리
+
+- Front Controller 가 수행하던 작업을 각 클래스로 분산 처리
+
+- 각 클래스는 통일된 형식(규격)으로 처리하도록 interface로 구현
