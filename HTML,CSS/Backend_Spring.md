@@ -771,4 +771,193 @@ application-context.xml
 
         
 
-  Bean named 'nameController' is expected to be of type 'com.spring_di_annotation_component2.NameController' but was actually of type 'com.spring_di_annotation_component.NameController'
+---
+
+
+
+### 설정 담당 자바 클래스에서 사용하는 어노테이션
+
+##### `@Configuration`
+
+- 빈 설정 클래스임을 나타내는 어노테이션
+
+##### `@Bean`
+
+- 빈을 생성해서 반환해주는 어노테이션
+- 빈을 생성하는 메소드 앞에 기술
+- `@Bean`이 붙은 메소드는 반드시 Bean 반환
+
+##### `@Bean` 어노테이션을 사용하는 경우
+
+- 일반적으로 `@Controller`, `@Service`, `@Repository` 어노테이션을 붙이지 않는 클래스의 빈 생성에 사용
+
+
+
+##### Q. 예제 
+
+- 패키지명: com.spring_di_annotation.configuration_bean
+- 사용 클래스
+  - BMI
+  - Member
+  - MemberMain
+  - ApplicationConfig.java
+
+
+
+---
+
+---
+
+
+
+## ***Spring MVC*** 구조
+
+- Spring MVC Project 생성
+- 설정
+- 구조확인
+- 데이터 전송
+- 폼을 통한 데이터 전송
+
+
+
+New / Spring MVC Project
+
+프로젝트 이름: spring_mvc_01
+
+패키지 이름: com.spring_mvc.project (.project 가 ContextPath가 된다 / 8080  다음에 나옴)
+
+
+
+1. pom.xml 버전 변경
+
+   - 기본 환경 확인
+     - Spring Framework 3.1.1 
+     - Java version 1.6
+     - Maven compiler
+       - source 1.6
+       - target 1.6
+   - 변경할 버전
+     - Spring Framework 4.3.4 (ln.12)
+     - Java version 1.8 (ln.11)
+     - Maven compiler
+       - source 1.8 (ln.141)
+       - target 1.8 (ln.142)
+
+   
+
+2.  프로젝트 설정 변경 (프로젝트 이름 우클릭)
+
+   - Java Compiler: 1.8 버전으로 변경
+
+   - Java Build Path: JRE 수정 (Default 1.8.0 으로)
+
+   - Project Facets: Java 버전 변경 (1.8 버전으로)
+
+     ​						   Dynamic Web module 버전 변경 (3.0)
+
+   
+
+3. Maven / Update Project
+
+   - 프로젝트 이름 우클릭 Maven → Update Project
+
+
+
+---
+
+
+
+프로젝트 이름: spring_mvc_01
+
+패키지 이름: com.spring_mvc.project
+
+실행 경로: http://localhost:8080/project/ 
+
+
+
+프로젝트 처음 생성 시
+
+- 기본 컨트롤러 포함 (HomeController.java)
+  - src.main
+- 기본 View 페이지 포함 (home.jsp)
+  - src\main\webapp\WEB_INF\view\ 여기에 있음
+
+
+
+HomeController
+
+- @RequestMapping(value = "/", method = RequestMethod.GET)
+- 요청 url 맵핑: "/": project를 의미: 요청을 받고 
+  - 처리 작업
+  - 결과를 View 페이지에 전송
+    - return "home";     // view 페이지 이름: home.jsp
+      	
+
+/WEB-INF/views/ + view 페이지 이름 + .jsp
+
+
+
+설정 파일 확인
+
+1. web.xml:		/ 요청 url 맵핑: "/": project를 의미: 요청을 받고 
+   1. 요청 url
+
+```xml
+<servlet-mapping>
+	<servlet-name>appServlet</servlet-name>
+	<url-pattern>/</url-pattern>
+</servlet-mapping>
+```
+​		  2. DispatcherServlet: 컨트롤러를 찾아서 작업 처리
+
+​		  3. 스프링 컨테이너 설정 파일 위치 지정
+
+​		  	/WEB-INF/spring/appServlet/servlet-context.xml (ln.23)
+
+ 2. servlet-context.xml 파일 확인
+
+    - 응답 페이지 설정되어 있음
+    - ViewResolver가 jsp 위치 찾고, 해당 jsp 파일 찾도록 설정
+
+    1. /WEB-INF/views/ : view 페이지의 위치
+    2. name="suffix" value=".jsp": 뷰 페이지 이름 확장자 (.jsp 파일)
+       - view 페이지 위치 + 여기에 뷰 페이지 이름 + .jsp: 뷰 페이지 설정
+
+
+
+컨트롤러에서 뷰 페이지 이름 반환: home
+
+
+
+### 스프링의 디렉토리 구조
+
+- src/main/java
+  - 자바 코드 위치
+  - Controller, Service, model 등이 들어감
+- src/main/resources
+  - 자바 코드에서 참조하라는 리소스 파일들
+  - DB 설정 파일 
+- src/main/webapp
+  - 웹 서비스 루트 디렉토리 
+  - 외부에서 접근 가능
+- src/main/webapp/resources
+  - 리소스 파일
+  - js, css, image 등 
+
+- src/main/webapp/WEB-INF/spring
+  - 스프링 환경 설정 파일
+  - .../appServlet/servlet-context.xml: 서블릿과 관련된 리소스에 대한 설정
+  - root-context.xml: 서블릿과 관련 없는 모든 리소스에 대한 설정
+- src/main/webapp/WEB-INF/views
+  - html, jsp 페이지 (컨트롤러를 경유해서 접근 가능)
+  - 외부에서는 직접 접근 불가 (보안 상의 이유)
+
+
+
+server.xml에서 context path 확인: 패키지 이름에서 맨 마지막. 다음에 오는 이름이 Context Path
+
+<Context docBase="spring_mvc_01" path="/project"
+
+패키지 이름: com.spring_mvc.project
+
+http://localhost:8081/project/
