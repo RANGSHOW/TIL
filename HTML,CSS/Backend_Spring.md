@@ -48,8 +48,10 @@
   즉, 복잡하게 다른 클래스를 상속받거나 인터페이스를 구현해야 하는 규칙이 없는 자바 클래스
 
 - POJO 대표적인 예
+  
   - JavaBean: 생성자와 Getters / Setters 만 지닌 단순 자바 객체
 - 대표적인 POJO 기반의 프레임워크
+  
   - 스프링 프레임워크
 
 
@@ -557,6 +559,7 @@ application-context.xml
    
 
 - 예제
+  
   - 패키지: com.di.spring_di_xml_setter
 
 
@@ -961,3 +964,178 @@ server.xml에서 context path 확인: 패키지 이름에서 맨 마지막. 다�
 패키지 이름: com.spring_mvc.project
 
 http://localhost:8081/project/
+
+
+
+---
+
+### 스프링 컨트롤러 
+
+- 스프링 컨트롤러는 빈으로 등록되어야 하며 
+
+  비즈니스 로직이 실행되기 전에 비즈니스 객체를 의존성 주입 (DI) 해야 함
+
+- `@Controller` 어노테이션 사용
+- `@RequestMapping` 어노테이션을 사용해서 url 맵핑: 사용자의 요청 받음
+
+
+
+- 컨트롤러 클래스 새로 작성
+- 클래스 새로 생성하고 `@Controller`  어노테이션 붙임
+- `@RequestMapping`  어노테이션을 사용해서 요청 경로 지정
+- 요청 처리 메소드 구현 필요
+- 뷰 페이지 이름 반환: `return "jsp 페이지 이름";`
+
+---
+
+####  Q. 연습 문제
+
+- 새 컨트롤러 생성 : SecondController
+- url 맵핑: /secondView
+- jsp 페이지: views/second 폴더 만들어서 그 안에 secondView.jsp 생성
+- SecondController 에게 요청해서 secondView.jsp 출력
+
+----
+
+
+
+#### 컨트롤러에서 View 페이지로 데이터 전달 방법
+
+1. Model 인터페이스 객체 사용 (Model == 데이터)
+2. ModelAndView 클래스 객체 사용
+
+
+
+##### 1. Model 인터페이스
+
+- Model에 Attributes 추가하는데 사용
+
+- ("key", value) 형태로 값을 임시 저장
+
+- Controller에서 Model에 데이터를 저장하고
+
+  View 이름을 return 하면
+
+  View 페이지로 Model 전달되고 
+
+  View 페이지에서 key를 사용해서 Model에 저장된 데이터 사용: ${key} (EL 표현)
+
+  
+
+##### 2. ModelAndView 클래스 객체 사용
+
+- 데이터와 뷰 둘 다 설정 할 때 사용
+
+  - 데이터 설정: `addObject(key, value)`
+  - 뷰 이름 설정: `setViewName("jsp 파일 이름")`
+
+- 반환값으로 ModelAndView 객체를 반환
+
+  ``` java
+  ModelAndView mv = new ModelAndView();
+  
+  mv.addObject("name", "홍길동")
+  
+  mv.setViewName("showInfo"); // showInfo.jsp
+  
+  return mv;
+  ```
+
+---
+
+#### Q. 연습문제
+
+- 컨트롤러: BookController
+- views 폴더 안에 Book 폴더 생성: bookInfoView.jsp
+
+- 데이터
+  - 제목: 스프링 프레임워크
+  - 가격: 20000
+  - 저자: 홍길동
+- 메소드
+  - showBookInfo1(): Model 사용
+  - showBookInfo2(): ModelAndView 사용
+- 요청 url
+  - bookInfoView1
+  - bookInfoView2
+
+---
+
+### `@RequestMapping` 다중 맵핑
+
+- 한 개의 메소드를 사용해서 여러 요청 경로로 접근 처리 가능
+
+  `@RequestMapping(value={"요청경로1", "요청경로2"})`
+
+---
+
+### Form 데이터 처리
+
+- 폼에 입력된 값을 컨트롤러로 전송
+
+- 스프링에서 HTTP 요청 파라미터 가져오는 방법 3가지
+
+  1. `getParameter()` 메소드 사용
+  2. `@RequestParam` 어노테이션 사용
+  3. `Command` 객체 이용
+     - Student클래스 생성하고 요청을 수행하는 메소드에서 Student객체 사용 (커맨드 객체)
+     - Command 객체는 자동으로 View Model에 등록
+     - View 페이지에서 ${객체.필드명}
+
+- index.jsp 만들고
+
+  실핼되면 바로 index.jsp 실행되게 설정
+
+- 요청:/ 이면 
+
+  view 이름: index
+
+
+
+`@ModelAttribute` 어노테이션
+
+- `Command` 객체 이름 변경 가능
+
+  `Student student`인 경우: `${student.no}`
+
+- `@ModelAttribute("studentInfo") Student student`
+- `${studentInfo.no}`
+
+---
+
+#### Q. 연습문제
+
+- 새 프로젝트: spring_mvc02
+
+- 패키지: com.spring_mvc.product
+
+  (http://localhost:XXXX/porduct/)
+
+
+
+- 상품 정보를 등록하는 프로그램 작성
+  - 상품 정보 등록 폼에서 입력한 데이터를 컨트롤러에게 전송하고
+  - 컨트롤러에서 받아온 데이터를 View 페이지로 출력
+  - 3 가지 방법 이용
+    - `getParameter()` 메소드 사용
+    - `@RequestParam` 어노테이션 사용
+    - `Command` 객체 이용
+
+
+
+- 컨트롤러: ProductController
+- 폼: productForm.jsp
+
+- 결과 출력: productResult1.jsp, productResult2.jsp
+
+
+
+- jsp 위치: product 폴더 만들고 그 안에 위치
+- 메소드 이름: insertProduct1() / insertProduct2() / insertProduct3() 
+
+---
+
+
+
+
+
