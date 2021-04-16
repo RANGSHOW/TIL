@@ -708,7 +708,7 @@ application-context.xml
   - `@Service`
   - `@Repository`
 - `@Configuration`
-  - `@Bean
+  - `@Bean`
 
 
 
