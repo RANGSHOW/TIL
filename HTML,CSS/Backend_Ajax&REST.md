@@ -328,4 +328,130 @@ views에 JSONTest.jsp
 - 단독 실행되는 스프링 애플리케이션 구현 가능
 - 톰캣 등 환경 구축에 필요한 서버 외적인 툴이 내장되어 있어서 별도 설치 필요 없음
 - 스프링 부트 전용 STS
-- 
+- JSP 뷰가 기본이 아니기 때문에 JSP 뷰를 사용할 경우
+  - application.properties 파일에 설정 추가
+  - pom.xml에 의존성 추가
+  - src/main/webapp폴더에 WEB-INF 폴더와 views 폴더 추가
+
+- application.properties 파일이 web.xml 대신하는 설정 파일
+- main()  메소드 포함: 스프링 부트 프로젝트는 main() 메소드를 시작점으로 실행
+- main() 이 반드시 있어야 함
+- 이유: 스프링 부트의 웹 애플리케이션을 일반 자바 어플리케이션처럼 개발하려는 의도 때문
+
+
+
+### 스프링 부트 프로젝트 생성
+
+- New / Spring Starter Project
+- JDBC API
+- Oracle Driver
+- Spring Web
+
+
+
+- 오라클 의존성을 선택했으므로 데이터베이스 연결 정보 필요
+- application.properties 파일에 DB 연결 정보 지정
+- application.properties : web.xml 대신 설정 파일로 사용
+- JSP 뷰가 기본이 아니기 때문에 JSP 뷰를 사용할 경우
+  - application.properties 파일에 설정 추가
+  - pom.xml에 의존성 추가
+  - src/main/webapp폴더에 WEB-INF 폴더와 views 폴더 추가
+
+
+
+##### 스프링 부트 프로젝트에서 자동으로 생성되는 클래스
+
+1.
+
+``` javascript
+@SpringBootApplication
+public class Myboot01Application {
+
+	public static void main(String[] args) {
+		SpringApplication.run(Myboot01Application.class, args);
+	}
+
+}
+```
+
+- `@SpringBootApplication`: 스프링 부트 애플리케이션으로 설정하는 어노테이션
+- `main()`메소드
+  - 스프링 생성시 자동으로 생성
+  - 스프링 프로젝트는 반드시 main()이 있어야 함
+
+2.
+
+``` javascript
+public class ServletInitializer extends SpringBootServletInitializer {
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(Myboot01Application.class);
+	}
+
+}
+
+```
+
+- `SpringBootServletInitializer`
+  - 스프링 부트 애플리케이션을 web.xml없이 톰캣에서 실행하게 해주는 것
+  - 그래서 스프링부트에는 web.xml과 context.xml 설정 파일이 없음
+
+
+
+---
+
+---
+
+
+
+세미 프로젝트
+
+- Spring Legacy Project: Spring MVC Project
+- 쇼핑몰 기반
+- 필수 기능 구현
+  - 로그인
+  - 회원가입
+  - 전체 목록 출력 (e.g. 상품, 책, 옷, 등)
+- 최종 제출
+  - 프로젝트 계획서 (~ 수요일 오전 중 (11시 50분까지))
+  - 포트폴리오
+  - 프로젝트 압축 파일
+
+- 발표: 4월 23일 오후 3시
+
+
+
+get 방식: http://localhost:8080/test01 을 쳐서 들어가는 것
+
+- doGet() 메소드 가 있어야 오류가 안난다
+
+서블릿의 장점
+
+서블릿은 클래스 상속 받아서 사용
+
+서블릿 맵핑의 이유
+
+쿠키, 세션에 대한 의미
+
+setter 메소드가 있어야 한다 setter 기반 일 때는 
+
+
+
+---
+
+과제2 - 스프링 프로젝트로 작성
+
+- ajax는 당연히 써야함
+
+- LoginController
+
+  - @RequestMapping("/xxxYyy") 
+  - @RequestParam("id") String id 나 String id = request.getParameter("id"); 둘 중 하나 쓰기
+
+- Ajax(): post
+
+  - 데이터: 클라이언트 >>> 서버
+
+    ​							 	 <<<
+
