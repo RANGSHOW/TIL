@@ -261,3 +261,71 @@ $.ajax({
 
 views에 JSONTest.jsp
 
+---
+
+#### FrontEnd 프로젝트: HTML, JS, CSS, image 파일을 스프링 프로젝트로 옮김
+
+- JS, CSS, image 파일: 리소스 파일
+  - 위치: src/main/webapp/resources 폴더에 위치 
+  - 설정 파일 (servlet-context.xml)에서 리소스 경로 지정
+- index.jsp에 index.html 내용 복사
+  - index.jsp / top.jsp / bottom.jsp 로 분리
+- 지금 만든 index.jsp 이름 변경 → index01.jsp
+- 새로 보내주는 index.jsp로 사용 (경로를 jstl 사용)
+
+
+
+- views 폴더 안에 jsp 폴더 생성
+  - jsp - top.jsp / bottom.jsp
+- index.jsp에서 잘라오기
+  - top.jsp: 첫줄 ~`</nav>` 잘라서 붙여넣기
+    - `<body>` `<html>`
+    - `<div id="wrap"` 삭제
+  - bottom.jsp: `<footer>` ~ `</footer>` 잘라서 `<body>` 안에 붙여 넣기
+
+---
+
+##### 로그인 기능 구현
+
+- 회원 클래스 파일 필요
+  - MemberVO
+  - IMemberService
+  - MemberService
+  - IMemberDAO
+  - MemberController
+  - MemberMapper.xml
+- 로그인 폼 이동
+- 로그인 체크
+  - id와 pw 일치하면 세션 변수로 저장
+  - 세션 변수 값에 따라 top 메뉴 항목이 다르게 출력
+  - 로그인 전: 로그인 회원가입
+  - 로그인 후: ~ 님 환영합니다 로그아웃 게시판 장바구니 MyPage
+
+
+
+---
+
+##### 아이디 중복 체크
+
+- pom.xml에 JSON 의존성 추가
+- 회원가입 폼으로 이동
+- id 중복 체크: ajax() 사용
+
+
+
+---
+
+## 스프링 부트 (Spring Boot)
+
+> 스프링 프레임워크를 사용하는 프로젝트를 아주 간편하게 설정할 수 있는
+>
+> 스프링 프레임 워크 서브 프로젝트
+
+- 톰캣 설치 등 여러 가지 복잡한 설정 필요 없음
+- XML 기반 설정 과정 없이 프로젝트를 시작할 수 잇음
+- Maven의 pom.xml 파일에 의존성 라이브러리의 버전을 일일이 저장하지 않아도 됨 
+  - 스프링 부트가 권장 버전 관리
+- 단독 실행되는 스프링 애플리케이션 구현 가능
+- 톰캣 등 환경 구축에 필요한 서버 외적인 툴이 내장되어 있어서 별도 설치 필요 없음
+- 스프링 부트 전용 STS
+- 
