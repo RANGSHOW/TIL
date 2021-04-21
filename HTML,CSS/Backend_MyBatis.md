@@ -142,7 +142,7 @@ C:\Users\rangs\.m2\repository\com\oracle\ojdbc\6 폴더에 저장 (폴더 없으
 - Controller
 - IService / Service
 - VO
-- IDAO / mapper.xml
+- IDAO / mapper.xml  
 - View 페이지(.jsp) - select / insert / update / delete / index
 
 ---
