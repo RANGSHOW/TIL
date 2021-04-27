@@ -474,4 +474,98 @@
 
   - 팀장: 메일 확인하고 Merge 작업 수행 / confirm 메일 전송
 
+
+
+
+---
+
+### 파일 업로드
+
+- MultipartFile 클래스 사용
+- 스프링 부트에서는 의존성 설정 필요 없음
+- application.properties 파일에서 파일 최대 크기만 설정
+
+
+
+#### 파일명이 중복되지 않고 파일 업로드
+
+- ##### UUID (Univerally Unique Identifier)
+
+  - 소프트웨어 구축에 쓰이는 식별자 표준
+
+  - 128 bit의 숫자
+
+  - 32개의 16진수로 표현, 총 36개 문자(32개 문자와 4개의 하이픈)
+
+    8-4-4-4-12 라는 5개의 그룹을 하이픈으로 구분
+
+  - 자바 UUID 클래스의 randomUUID() 메소드를 사용해서 유일한 식별자 생성 - 파일 이름으로 사용
+    - 새로 생성된 파일명 + 원본 파일명
+
+
+
+#### 스프링 부트 프로젝트에서 파일 업로드
+
+- 파일 업로드 폼 생성
+  - views / upload / fileUploadForm.jsp
+- 파일 업로드 결과 출력 페이지 생성: fileUploadResult.jsp
+- 패키지 생성: com.multi.file
+- 컨트롤러 생성: FileUploadController / FileDownloadController
+- 업로드된 파일 저장 위치: 외부 폴더 생성 ("C:/upload" 폴더에 저장)
+
+---
+
+### 파일 업로드
+
+1. 파일 업로드 폼 생성
+
+   - views/
+
+2. index에 링크 추가
+
+3. 패키지 생성: com.multi.file
+
+4. FileUploadController 생성
+
+   - BootMybatisApplication 클래스에
+
+     @ComponentScan(basePackageClasses=FileUploadController.class) 등록
+
+5. FileUploadController에 파일 업로드 처리 작업 추가
+6. fileUploadResult.jsp 파일 생성
+7. 실행: 파일 업로드 결과 확인 ("C:/upload/" 폴더 확인)
+
+---
+
+### 파일 다운로드
+
+- 전체 파일 목록 출력
+
+- 파일 목록에서 다운로드할 파일 선택하면 다운로드 폴더로파일 다운로드 됨
+
   
+
+1. FileDownloadController 생성
+2. @ComponentScan(basePackageClasses=FileDownloadController.class) 등록
+3. fileDownloadForm.jsp 생성
+4. index.jsp에 경로 추가
+5. 실행해서 파일 다운로드 폼 확인
+6. FileDownloadController에 파일 다운로드 처리 작업 추가
+7. 실행: 파일 다운로드 되는지 확인 (다운로드 폴더에 다운로드 됨)
+
+---
+
+### 여러 개 파일 업로드
+
+- `form: <input>` 태그에서 `multiple="multiple"` 로 설정
+- uploadController에서 ArrayList로 받음: `ArrayList<MultipartFile> files`
+- for 문 사용해서 파일 이름 변경, 파일 생성, 파일 서버로 전송
+
+---
+
+### 파일이름 변경하지 않고 원본 파일명으로 파일 업로드
+
+- 저장할 폴더: C:/upload/image
+- upload 폼에 추가 
+- uploadController에 추가
+- fileImageUploadResult.jsp 추가해서 C:/upload/image 폴더 확인하라고 출력
