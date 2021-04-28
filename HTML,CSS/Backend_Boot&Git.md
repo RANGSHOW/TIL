@@ -569,3 +569,30 @@
 - upload 폼에 추가 
 - uploadController에 추가
 - fileImageUploadResult.jsp 추가해서 C:/upload/image 폴더 확인하라고 출력
+
+---
+
+
+
+## 스프링 부트 프로젝트에서 네이버 API 이용해서 도서 검색
+
+1. ##### Spring Boot Project 생성 : Spring Web만 체크
+
+   - bootAPI
+
+   - JSP 의존성 설정
+   - 포트번호 지정
+
+2. ##### 네이버 개발자 센터에서 Open API 사용법 확인
+
+3. ##### 도서 검색 프로그램 작성
+
+   - BookVO
+   - APIController
+   - index.jsp
+   - bookListView.jsp
+
+https://openapi.naver.com/v1/search/
+
+
+
