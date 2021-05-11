@@ -3,12 +3,11 @@
 > 유명인 얼굴 인식
 
 - 스프링 프로젝트 생성
-
 - NAVER AI Platform에서 Application 등록
-
 - 인증키 받아서 API를 통해 결과 받아 JSP 뷰페이지로 출력
+- https://auth.ncloud.com/nsa/kdigital2c
 
-
+- kdaic0507!
 
 ---
 
